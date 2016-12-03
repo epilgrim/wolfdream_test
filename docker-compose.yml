@@ -1,0 +1,27 @@
+version: '2'
+services:
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami.${WOLFDREAM_PROJECT_URL}
+    networks:
+      - whoami
+      - proxy
+    labels:
+      com.wolfdream.wolfdream_project: "true"
+      com.wolfdream.http_up_url: whoami.${WOLFDREAM_PROJECT_URL}
+      com.wolfdream.build_path: ${WOLFDREAM_BUILD_PATH}
+      com.wolfdream.project_slug: ${WOLFDREAM_PROJECT_SLUG}
+      com.wolfdream.instance_name: ${WOLFDREAM_PROJECT_INSTANCE_NAME}
+  whoami2:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=whoami2.${WOLFDREAM_PROJECT_URL}
+    networks:
+      - whoami
+      - proxy
+networks:
+  whoami:
+  proxy:
+    external:
+      name: wolfdream_nginx-proxy-network
